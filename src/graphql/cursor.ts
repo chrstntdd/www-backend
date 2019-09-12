@@ -3,7 +3,8 @@ import { Kind } from 'graphql/language'
 
 const toCursor = ({ value }) => Buffer.from(value).toString('base64')
 
-const fromCursor = (cursor: string) => Buffer.from(cursor, 'base64').toString('ascii')
+const fromCursor = (cursor: string) =>
+  Buffer.from(cursor, 'base64').toString('ascii')
 
 const CursorType = new GraphQLScalarType({
   name: 'Cursor',

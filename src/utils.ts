@@ -13,7 +13,10 @@ let signToken = id => sign({ userId: id }, JWT_SECRET, { expiresIn: '1d' })
 let verifyJwt = async (req: Request) => {
   let token
 
-  if (req.headers.authorization && req.headers.authorization.includes('Bearer')) {
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.includes('Bearer')
+  ) {
     token = req.headers.authorization.split(' ')[1]
   }
 

@@ -113,7 +113,9 @@ userSchema.pre('save', async function(this: UserModel, next) {
   }
 })
 
-userSchema.methods.isPasswordValid = async function(password: string): Promise<Boolean> {
+userSchema.methods.isPasswordValid = async function(
+  password: string
+): Promise<Boolean> {
   try {
     return await compare(password, this.password)
   } catch (error) {

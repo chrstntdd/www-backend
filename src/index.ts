@@ -74,7 +74,9 @@ mongoose.connection.on('disconnected', function() {
 // If the Node process ends, close the Mongoose connection
 process.on('SIGINT', function() {
   mongoose.connection.close(function() {
-    console.log('Mongoose default connection disconnected through app termination')
+    console.log(
+      'Mongoose default connection disconnected through app termination'
+    )
     process.exit(0)
   })
 })
@@ -94,7 +96,13 @@ app.use(
       context: {
         request
       },
-      formatError: ({ extensions = {}, message, locations, stack = '', path }) => ({
+      customFormatErrorFn: ({
+        extensions = {},
+        message,
+        locations,
+        stack = '',
+        path
+      }) => ({
         message,
         ...(!IS_PRODUCTION && {
           locations,

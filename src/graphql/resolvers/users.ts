@@ -4,7 +4,9 @@ import { ApiError } from '../../config/error'
 export default {
   signUp: async (_, { username, password }) => {
     if (await User.findOne({ username })) {
-      throw new ApiError('CLIENT', { message: `Username '${username}' is already taken` })
+      throw new ApiError('CLIENT', {
+        message: `Username '${username}' is already taken`
+      })
     }
 
     const newUser = await new User({

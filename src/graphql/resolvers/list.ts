@@ -1,7 +1,11 @@
 import { Types, Query } from 'mongoose'
 
 import { GraphQlContext } from '../../'
-import { listModel as List, itemModel as Item, userModel as User } from '../../models'
+import {
+  listModel as List,
+  itemModel as Item,
+  userModel as User
+} from '../../models'
 
 import { verifyJwt } from '../../utils'
 
@@ -28,7 +32,9 @@ export default {
 
       if (items) {
         items.forEach(item => {
-          initialItems.push(new Item({ _id: new Types.ObjectId(), ...item }).save())
+          initialItems.push(
+            new Item({ _id: new Types.ObjectId(), ...item }).save()
+          )
         })
       }
 
@@ -64,7 +70,11 @@ export default {
    * Get lists for an authenticated user. Collection can be
    * queried for `first` and `last` slices.
    */
-  lists: async (_, { first, last, before, after }: Paginateable, { request }: GraphQlContext) => {
+  lists: async (
+    _,
+    { first, last, before, after }: Paginateable,
+    { request }: GraphQlContext
+  ) => {
     const { userId } = await verifyJwt(request)
     let totalCount = null
 
@@ -72,7 +82,11 @@ export default {
      * after is used when paginating `forwards` in a collection
      * before is used when paginating `backwards` in a collection
      */
-    const params = after ? { _id: { $gt: after } } : before ? { _id: { $lt: before } } : {}
+    const params = after
+      ? { _id: { $gt: after } }
+      : before
+      ? { _id: { $lt: before } }
+      : {}
 
     const q: Query<any> = List.find({ owner: userId, ...params })
 
