@@ -53,27 +53,30 @@ const schema = makeExecutableSchema({
   }
 })
 
-mongoose.connect(DATABASE_URL, { useNewUrlParser: true })
+mongoose.connect(DATABASE_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
 
 // CONNECTION EVENTS
 // When successfully connected
-mongoose.connection.on('connected', function() {
+mongoose.connection.on('connected', () => {
   console.log('Mongoose default connection open to ' + DATABASE_URL)
 })
 
 // If the connection throws an error
-mongoose.connection.on('error', function(err) {
+mongoose.connection.on('error', err => {
   console.log('Mongoose default connection error: ' + err)
 })
 
 // When the connection is disconnected
-mongoose.connection.on('disconnected', function() {
+mongoose.connection.on('disconnected', () => {
   console.log('Mongoose default connection disconnected')
 })
 
 // If the Node process ends, close the Mongoose connection
-process.on('SIGINT', function() {
-  mongoose.connection.close(function() {
+process.on('SIGINT', () => {
+  mongoose.connection.close(() => {
     console.log(
       'Mongoose default connection disconnected through app termination'
     )
